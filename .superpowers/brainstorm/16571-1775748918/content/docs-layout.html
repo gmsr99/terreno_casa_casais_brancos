@@ -1,0 +1,39 @@
+<h2>Como visualizar os documentos na tab?</h2>
+<p class="subtitle">Quando o utilizador clica num documento, o que acontece?</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Abre o PDF no browser / leitor nativo</h3>
+      <p>Clica no documento → o PDF abre numa nova janela/tab do browser. No iPhone usa o leitor de PDF nativo do iOS. Simples e fiável em todos os dispositivos.</p>
+      <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap;">
+        <span style="padding:4px 10px; background:#f0ece4; border-radius:6px; font-size:12px">✅ Funciona sempre</span>
+        <span style="padding:4px 10px; background:#f0ece4; border-radius:6px; font-size:12px">✅ iOS / Android</span>
+        <span style="padding:4px 10px; background:#f0ece4; border-radius:6px; font-size:12px">⚠️ Sai da app</span>
+      </div>
+    </div>
+  </div>
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Painel de leitura incorporado (iframe)</h3>
+      <p>Clica → aparece um painel de leitura dentro da app com o PDF embutido. Fica tudo na app, mas em iOS pode não funcionar corretamente (limitação do Safari).</p>
+      <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap;">
+        <span style="padding:4px 10px; background:#f0ece4; border-radius:6px; font-size:12px">✅ Fica na app</span>
+        <span style="padding:4px 10px; background:#f0ece4; border-radius:6px; font-size:12px">⚠️ Problemas iOS</span>
+      </div>
+    </div>
+  </div>
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Híbrido — tenta embutir, se falhar abre fora</h3>
+      <p>A app tenta mostrar o PDF num painel interno. Se o dispositivo não suportar, oferece um botão "Abrir externamente". O melhor dos dois mundos com mais complexidade.</p>
+      <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap;">
+        <span style="padding:4px 10px; background:#f0ece4; border-radius:6px; font-size:12px">✅ Mais robusto</span>
+        <span style="padding:4px 10px; background:#f0ece4; border-radius:6px; font-size:12px">⚠️ Mais complexo</span>
+      </div>
+    </div>
+  </div>
+</div>

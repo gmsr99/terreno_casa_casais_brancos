@@ -1198,6 +1198,68 @@
       color: var(--ink-2);
       line-height: 1.45;
     }
+
+    /* --- Document cards (tab-docs) --- */
+    .doc-card {
+      background: var(--surface);
+      border-radius: var(--r);
+      box-shadow: var(--sh);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.12s;
+      text-decoration: none;
+    }
+
+    .doc-card:active {
+      background: var(--surface-2);
+    }
+
+    .doc-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--terra-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .doc-card-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--terra);
+    }
+
+    .doc-card-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .doc-card-title {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 3px;
+    }
+
+    .doc-card-desc {
+      font-size: 12px;
+      color: var(--ink-3);
+      line-height: 1.4;
+    }
+
+    .doc-card-arrow {
+      flex-shrink: 0;
+      color: var(--ink-4);
+    }
   </style>
 </head>
 
@@ -2516,6 +2578,126 @@
 
       </section><!-- /tab-reuniao -->
 
+      <!-- ============================================================
+       TAB: DOCUMENTOS
+       ============================================================ -->
+      <section id="tab-docs" class="tab-section">
+
+        <p class="section-label">Câmara Municipal de Óbidos</p>
+
+        <a class="doc-card" href="public/Alvara_Licenciamento_Loteamento_Urbano.pdf" target="_blank" rel="noopener">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14,2 14,8 20,8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10,9 9,9 8,9"/>
+            </svg>
+          </div>
+          <div class="doc-card-content">
+            <div class="doc-card-title">Alvará de Licenciamento de Loteamento Urbano</div>
+            <div class="doc-card-desc">Cria juridicamente os 3 lotes do terreno e estabelece as confrontações. Base do registo predial atual. Emitido em 01/04/1986.</div>
+          </div>
+          <div class="doc-card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <polyline points="9,18 15,12 9,6"/>
+            </svg>
+          </div>
+        </a>
+
+        <p class="section-label">Conservatória do Registo Predial · Autoridade Tributária e Aduaneira</p>
+
+        <a class="doc-card" href="public/Certidao_Permanente.pdf" target="_blank" rel="noopener">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14,2 14,8 20,8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10,9 9,9 8,9"/>
+            </svg>
+          </div>
+          <div class="doc-card-content">
+            <div class="doc-card-title">Certidão Permanente</div>
+            <div class="doc-card-desc">Comprova a propriedade, histórico de inscrições e transmissões do prédio. Inclui a Caderneta Predial Rústica com composição e valor patrimonial.</div>
+          </div>
+          <div class="doc-card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <polyline points="9,18 15,12 9,6"/>
+            </svg>
+          </div>
+        </a>
+
+        <p class="section-label">Direção-Geral do Território (DGT)</p>
+
+        <a class="doc-card" href="public/Ficha_Predio.pdf" target="_blank" rel="noopener">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14,2 14,8 20,8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10,9 9,9 8,9"/>
+            </svg>
+          </div>
+          <div class="doc-card-content">
+            <div class="doc-card-title">Ficha de Prédio</div>
+            <div class="doc-card-desc">Área georreferenciada oficial: 9.754 m². Identificação cadastral nº AAA 001 659 086. Ficha nº 60332/2024.</div>
+          </div>
+          <div class="doc-card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <polyline points="9,18 15,12 9,6"/>
+            </svg>
+          </div>
+        </a>
+
+        <p class="section-label">Município de Óbidos</p>
+
+        <a class="doc-card" href="public/Pedido_Direito_Informa%C3%A7%C3%A3o_2024.pdf" target="_blank" rel="noopener">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14,2 14,8 20,8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10,9 9,9 8,9"/>
+            </svg>
+          </div>
+          <div class="doc-card-content">
+            <div class="doc-card-title">Pedido Direito à Informação</div>
+            <div class="doc-card-desc">Informação técnica (Processo 376/24): zonamento PDM, índices urbanísticos aplicáveis e conclusão favorável à construção.</div>
+          </div>
+          <div class="doc-card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <polyline points="9,18 15,12 9,6"/>
+            </svg>
+          </div>
+        </a>
+
+        <a class="doc-card" href="public/Planta_de_localizacao.pdf" target="_blank" rel="noopener">
+          <div class="doc-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14,2 14,8 20,8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10,9 9,9 8,9"/>
+            </svg>
+          </div>
+          <div class="doc-card-content">
+            <div class="doc-card-title">Planta de Localização</div>
+            <div class="doc-card-desc">Delimitação do prédio com o loteamento 168/86 sobreposto. Elaborada pela Gestão Urbanística da CMO em abril de 2024.</div>
+          </div>
+          <div class="doc-card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <polyline points="9,18 15,12 9,6"/>
+            </svg>
+          </div>
+        </a>
+
+      </section><!-- /tab-docs -->
+
     </main><!-- /main -->
 
     <!-- ============================================================
@@ -2571,6 +2753,17 @@
           <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
         </svg>
         <span>Reunião</span>
+      </button>
+      <button class="nav-btn" data-tab="docs" onclick="switchTab('docs', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+          <polyline points="14,2 14,8 20,8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <polyline points="10,9 9,9 8,9" />
+        </svg>
+        <span>Docs</span>
       </button>
     </nav>
 

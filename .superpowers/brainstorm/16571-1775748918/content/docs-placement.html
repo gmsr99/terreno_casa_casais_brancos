@@ -1,0 +1,38 @@
+<h2>Onde ficam os Documentos na app?</h2>
+<p class="subtitle">A app tem atualmente 5 tabs. Qual a melhor forma de integrar a secção de documentos?</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Nova tab "Documentos" na barra de navegação</h3>
+      <p>A barra de navegação passa a ter 6 items: Início · Terreno · Construir · Processo · Reunião · <strong>Docs</strong>. Acesso direto e sempre visível.</p>
+      <div style="margin-top:12px; display:flex; gap:6px; flex-wrap:wrap;">
+        <span style="padding:4px 10px; background:#f0ece4; border-radius:6px; font-size:12px">✅ Acesso rápido</span>
+        <span style="padding:4px 10px; background:#f0ece4; border-radius:6px; font-size:12px">⚠️ Barra fica cheia</span>
+      </div>
+    </div>
+  </div>
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Secção dentro de uma tab existente</h3>
+      <p>Os documentos são uma secção scrollável dentro da tab mais adequada (ex: "Processo" ou "Início"). A navegação não muda.</p>
+      <div style="margin-top:12px; display:flex; gap:6px; flex-wrap:wrap;">
+        <span style="padding:4px 10px; background:#f0ece4; border-radius:6px; font-size:12px">✅ Barra limpa</span>
+        <span style="padding:4px 10px; background:#f0ece4; border-radius:6px; font-size:12px">⚠️ Menos visível</span>
+      </div>
+    </div>
+  </div>
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Tab substituída — Reunião → Documentos</h3>
+      <p>A tab "Reunião" (conteúdo já desatualizado) é transformada numa tab de Documentos. Mantém 5 tabs. O conteúdo da reunião pode ser movido para "Processo".</p>
+      <div style="margin-top:12px; display:flex; gap:6px; flex-wrap:wrap;">
+        <span style="padding:4px 10px; background:#f0ece4; border-radius:6px; font-size:12px">✅ Nº tabs igual</span>
+        <span style="padding:4px 10px; background:#f0ece4; border-radius:6px; font-size:12px">⚠️ Perde-se tab reunião</span>
+      </div>
+    </div>
+  </div>
+</div>
