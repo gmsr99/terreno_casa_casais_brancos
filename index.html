@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#B85C2C">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Casais Brancos">
+<meta name="description" content="Terreno Casais Brancos, Óbidos — Referência completa para acompanhamento do processo.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<title>Casais Brancos · Óbidos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & CUSTOM PROPERTIES
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+img, svg { display: block; max-width: 100%; }
+button { border: none; background: none; cursor: pointer; font: inherit; color: inherit; }
+a { color: inherit; }
+table { border-collapse: collapse; width: 100%; }
+
+:root {
+  --bg:         #F8F4EE;
+  --surface:    #FFFFFF;
+  --surface-2:  #F3EDE3;
+  --terra:      #B85C2C;
+  --terra-dim:  #D4876B;
+  --terra-soft: rgba(184,92,44,0.10);
+  --olive:      #4A5D3F;
+  --olive-soft: rgba(74,93,63,0.10);
+  --ink:        #1C160D;
+  --ink-2:      #3D3022;
+  --ink-3:      #6B5840;
+  --ink-4:      #9E8A73;
+  --border:     rgba(28,22,13,0.09);
+  --border-2:   rgba(28,22,13,0.16);
+
+  --c-ok:       #2D6A3A;
+  --c-ok-bg:    rgba(45,106,58,0.09);
+  --c-warn:     #A07800;
+  --c-warn-bg:  rgba(160,120,0,0.09);
+  --c-danger:   #B83232;
+  --c-danger-bg:rgba(184,50,50,0.09);
+  --c-pending:  #5B4FCF;
+  --c-pending-bg:rgba(91,79,207,0.09);
+  --c-muted:    #7A7A7A;
+  --c-muted-bg: rgba(122,122,122,0.09);
+
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'DM Sans', system-ui, -apple-system, sans-serif;
+
+  --r:    12px;
+  --r-sm: 8px;
+  --r-lg: 16px;
+  --sh:   0 1px 3px rgba(28,22,13,0.06), 0 4px 12px rgba(28,22,13,0.04);
+  --sh-md:0 2px 8px rgba(28,22,13,0.08), 0 6px 20px rgba(28,22,13,0.06);
+
+  --nav-h:    64px;
+  --header-h: 56px;
+  --safe-b:   env(safe-area-inset-bottom, 0px);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100dvh;
+  overscroll-behavior: none;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* --- Header --- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  gap: 10px;
+}
+.header-icon {
+  width: 30px; height: 30px;
+  background: var(--terra);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.header-icon svg { width: 18px; height: 18px; }
+.header-text { flex: 1; min-width: 0; }
+.header-title {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.header-sub {
+  font-size: 11px;
+  color: var(--ink-4);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.header-badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 100px;
+  background: var(--terra-soft);
+  color: var(--terra);
+  white-space: nowrap;
+}
+
+/* --- Main / Tabs --- */
+main {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+.tab-section {
+  display: none;
+  height: calc(100dvh - var(--header-h) - var(--nav-h) - var(--safe-b));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 16px calc(8px + var(--safe-b));
+}
+.tab-section.active {
+  display: block;
+  animation: fadeIn 0.18s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Bottom Nav --- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0; right: 0;
+  z-index: 200;
+  height: calc(var(--nav-h) + var(--safe-b));
+  padding-bottom: var(--safe-b);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: stretch;
+}
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 6px 4px 4px;
+  color: var(--ink-4);
+  transition: color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-btn svg { width: 22px; height: 22px; transition: transform 0.15s; }
+.nav-btn span {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.nav-btn.active {
+  color: var(--terra);
+}
+.nav-btn.active svg { transform: scale(1.08); }
+
+/* ============================================================
+   COMPONENTS
+   ============================================================ */
+
+/* --- Cards --- */
+.card {
+  background: var(--surface);
+  border-radius: var(--r);
+  box-shadow: var(--sh);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.card-header {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-title {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  flex: 1;
+}
+.card-body { padding: 14px 16px; }
+.card-body + .card-body { border-top: 1px solid var(--border); }
+
+/* --- Section label --- */
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  margin: 20px 0 8px;
+}
+.section-label:first-child { margin-top: 0; }
+
+/* --- Data rows (key-value) --- */
+.data-list { display: grid; gap: 0; }
+.data-row {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 8px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+.data-row:last-child { border-bottom: none; }
+.data-key {
+  font-size: 13px;
+  color: var(--ink-3);
+  font-weight: 400;
+  line-height: 1.4;
+}
+.data-val {
+  font-size: 14px;
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: right;
+}
+.data-val.mono {
+  font-family: 'SF Mono', 'Menlo', monospace;
+  font-size: 13px;
+}
+
+/* --- Tables (responsive) --- */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.data-table {
+  font-size: 13px;
+  min-width: 460px;
+}
+.data-table th {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  text-align: left;
+  padding: 8px 10px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+.data-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink-2);
+  vertical-align: top;
+  line-height: 1.4;
+}
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover td { background: var(--surface-2); }
+.data-table .highlight td { background: rgba(184,92,44,0.04); font-weight: 500; }
+
+/* --- Badges --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+.badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+.badge-ok      { color: var(--c-ok);      background: var(--c-ok-bg); }
+.badge-warn    { color: var(--c-warn);    background: var(--c-warn-bg); }
+.badge-danger  { color: var(--c-danger);  background: var(--c-danger-bg); }
+.badge-pending { color: var(--c-pending); background: var(--c-pending-bg); }
+.badge-muted   { color: var(--c-muted);   background: var(--c-muted-bg); }
+
+/* --- Alert / Note boxes --- */
+.alert {
+  border-radius: var(--r-sm);
+  padding: 12px 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.alert-icon {
+  font-size: 16px;
+  margin-right: 6px;
+}
+.alert-warn  { background: var(--c-warn-bg);   border-left: 3px solid var(--c-warn); color: var(--ink-2); }
+.alert-info  { background: var(--terra-soft);   border-left: 3px solid var(--terra); color: var(--ink-2); }
+.alert-ok    { background: var(--c-ok-bg);      border-left: 3px solid var(--c-ok); color: var(--ink-2); }
+.alert-danger{ background: var(--c-danger-bg);  border-left: 3px solid var(--c-danger); color: var(--ink-2); }
+.alert strong { font-weight: 600; }
+
+/* --- Progress bar --- */
+.progress-wrap {
+  background: var(--surface-2);
+  border-radius: 100px;
+  height: 10px;
+  overflow: hidden;
+  margin: 8px 0 4px;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(90deg, var(--terra-dim), var(--terra));
+  transition: width 0.6s cubic-bezier(.23,1,.32,1);
+}
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--ink-3);
+  margin-top: 4px;
+}
+.progress-label strong { color: var(--terra); }
+
+/* --- Hero / Dashboard cards --- */
+.hero-card {
+  background: linear-gradient(135deg, #2A1E10 0%, #3D2D18 50%, #4A3320 100%);
+  border-radius: var(--r-lg);
+  padding: 22px 20px;
+  color: white;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-card::after {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: rgba(184,92,44,0.18);
+}
+.hero-tag {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 6px;
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: white;
+  margin-bottom: 2px;
+}
+.hero-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 18px;
+}
+.hero-ref {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  font-family: 'SF Mono', monospace;
+  letter-spacing: 0.04em;
+}
+
+/* --- Metric grid --- */
+.metric-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.metric-card {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 14px 14px 12px;
+  box-shadow: var(--sh);
+}
+.metric-val {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--terra);
+  margin-bottom: 2px;
+}
+.metric-unit {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-3);
+}
+.metric-label {
+  font-size: 12px;
+  color: var(--ink-4);
+  line-height: 1.3;
+}
+
+/* --- Status cards --- */
+.status-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.status-card {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 13px 14px;
+  box-shadow: var(--sh);
+}
+.status-card-label {
+  font-size: 12px;
+  color: var(--ink-4);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.status-card-title {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink-2);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+/* --- Timeline --- */
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px; top: 8px; bottom: 8px;
+  width: 2px;
+  background: var(--border-2);
+  border-radius: 2px;
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 22px;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -24px;
+  top: 5px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 2px solid var(--border-2);
+  z-index: 1;
+}
+.tl-item.milestone::before {
+  background: var(--terra);
+  border-color: var(--terra);
+  width: 12px; height: 12px;
+  left: -25px;
+}
+.tl-item.future::before {
+  background: var(--surface);
+  border-color: var(--c-pending);
+  border-style: dashed;
+}
+.tl-date {
+  font-size: 11px;
+  color: var(--ink-4);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+.tl-text {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.4;
+}
+
+/* --- Calculator --- */
+.calc-section { margin-bottom: 14px; }
+.calc-label {
+  font-size: 13px;
+  color: var(--ink-3);
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.calc-val-display {
+  font-weight: 600;
+  color: var(--terra);
+  font-size: 14px;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--surface-2);
+  border-radius: 100px;
+  outline: none;
+  cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--terra);
+  box-shadow: 0 1px 4px rgba(184,92,44,0.35);
+  cursor: pointer;
+}
+input[type=range]::-moz-range-thumb {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--terra);
+  border: none;
+  cursor: pointer;
+}
+.calc-results {
+  background: var(--surface-2);
+  border-radius: var(--r);
+  padding: 16px;
+  margin-top: 4px;
+}
+.calc-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.calc-result-row:last-child { border-bottom: none; }
+.calc-result-key { font-size: 13px; color: var(--ink-3); }
+.calc-result-val {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--terra);
+}
+.calc-result-val.small { font-size: 16px; }
+.calc-feasibility {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* --- Checklist --- */
+.checklist { display: flex; flex-direction: column; gap: 0; }
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.2s;
+}
+.check-item:last-child { border-bottom: none; }
+.check-item.done { opacity: 0.5; }
+.check-box {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--border-2);
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  margin-top: 1px;
+}
+.check-item.done .check-box {
+  background: var(--c-ok);
+  border-color: var(--c-ok);
+}
+.check-item.done .check-box svg { opacity: 1; }
+.check-box svg { opacity: 0; width: 12px; height: 12px; }
+.check-text {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  flex: 1;
+}
+.check-item.done .check-text { text-decoration: line-through; color: var(--ink-4); }
+.check-num {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--terra-dim);
+  width: 22px;
+  text-align: center;
+  line-height: 1;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+/* --- Accordion / Glossary --- */
+.accordion-item {
+  border-bottom: 1px solid var(--border);
+}
+.accordion-item:last-child { border-bottom: none; }
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 0;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.accordion-term {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.accordion-arrow {
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  color: var(--ink-4);
+  transition: transform 0.2s;
+}
+.accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+.accordion-body {
+  display: none;
+  padding-bottom: 13px;
+}
+.accordion-item.open .accordion-body { display: block; }
+.accordion-def {
+  font-size: 13.5px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+/* --- Lot cards --- */
+.lot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.lot-card {
+  border-radius: var(--r-sm);
+  padding: 12px 10px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+.lot-card.this-lot {
+  background: var(--terra-soft);
+  border-color: var(--terra-dim);
+}
+.lot-num {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--terra);
+  margin-bottom: 2px;
+}
+.lot-area {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-2);
+  margin-bottom: 4px;
+}
+.lot-dest {
+  font-size: 11px;
+  color: var(--ink-4);
+  line-height: 1.3;
+}
+.lot-card.this-lot .lot-dest { color: var(--terra); }
+
+/* --- Risk item --- */
+.risk-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.risk-item:last-child { border-bottom: none; }
+.risk-sev {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 1px;
+}
+.risk-sev-alta   { background: var(--c-danger-bg); color: var(--c-danger); }
+.risk-sev-media  { background: var(--c-warn-bg);   color: var(--c-warn); }
+.risk-sev-baixa  { background: var(--c-ok-bg);     color: var(--c-ok); }
+.risk-text { flex: 1; }
+.risk-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+.risk-state { font-size: 12px; color: var(--ink-4); }
+
+/* --- Open point item --- */
+.open-item {
+  display: flex;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.open-item:last-child { border-bottom: none; }
+.open-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  background: var(--terra-soft);
+  color: var(--terra);
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.open-text {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* --- Divider --- */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 14px 0;
+}
+
+/* --- Link button --- */
+.link-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border-radius: var(--r-sm);
+  margin-bottom: 8px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.link-btn:active { background: var(--border); }
+.link-btn svg { color: var(--terra); flex-shrink: 0; }
+.link-btn-text { flex: 1; }
+.link-btn-title { font-size: 14px; font-weight: 500; }
+.link-btn-sub   { font-size: 12px; color: var(--ink-4); }
+.link-arrow { color: var(--ink-4); }
+
+/* --- Instruments list --- */
+.instrument-item {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13.5px;
+  color: var(--ink-2);
+  line-height: 1.4;
+}
+.instrument-item:last-child { border-bottom: none; }
+.instrument-item strong { color: var(--ink); }
+
+/* --- Person item --- */
+.person-item {
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+}
+.person-item:last-child { border-bottom: none; }
+.person-name { font-size: 14px; font-weight: 500; color: var(--ink); }
+.person-role { font-size: 12.5px; color: var(--ink-3); margin-top: 1px; }
+
+/* --- Utility --- */
+.text-terra  { color: var(--terra); }
+.text-muted  { color: var(--ink-4); font-size: 13px; }
+.text-sm     { font-size: 13px; }
+.text-xs     { font-size: 12px; }
+.text-center { text-align: center; }
+.mt-8 { margin-top: 8px; }
+.mt-12 { margin-top: 12px; }
+.mt-4 { margin-top: 4px; }
+.mb-8 { margin-bottom: 8px; }
+.bold { font-weight: 600; }
+.serif { font-family: var(--serif); }
+ul.bullet { padding-left: 18px; }
+ul.bullet li { margin-bottom: 5px; font-size: 13.5px; color: var(--ink-2); line-height: 1.45; }
+</style>
+</head>
+
+<body>
+<div id="app">
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="app-header">
+  <div class="header-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+      <polyline points="9,22 9,12 15,12 15,22"/>
+    </svg>
+  </div>
+  <div class="header-text">
+    <div class="header-title">Casais Brancos</div>
+    <div class="header-sub">Óbidos · Rústico → Urbano</div>
+  </div>
+  <span class="header-badge">Processo Ativo</span>
+</header>
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<main>
+
+<!-- ====================================================
+     TAB 1: INÍCIO
+     ==================================================== -->
+<section id="tab-inicio" class="tab-section active">
+
+  <!-- Hero -->
+  <div class="hero-card">
+    <div class="hero-tag">Terreno · Prédio Rústico</div>
+    <div class="hero-title">Casais Brancos</div>
+    <div class="hero-sub">Óbidos (S. Pedro) · Art. Matricial 57 · Secção S</div>
+    <div class="progress-wrap">
+      <div class="progress-fill" style="width: 58.3%"></div>
+    </div>
+    <div class="progress-label">
+      <span>Pagamento <strong>€21.000 pagos</strong></span>
+      <span>€36.000 total</span>
+    </div>
+    <div class="hero-ref">574/19891116 · NIF 224414127</div>
+  </div>
+
+  <!-- Metrics -->
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-val">9.754<span class="metric-unit"> m²</span></div>
+      <div class="metric-label">Área total<br>(cadastro DGT)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">≈528<span class="metric-unit"> m²</span></div>
+      <div class="metric-label">Zona urbana<br>(Espaço Urb. Nível 3)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">132<span class="metric-unit"> m²</span></div>
+      <div class="metric-label">Área máx.<br>construção bruta</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">€15k</div>
+      <div class="metric-label">Valor em falta<br>para escritura</div>
+    </div>
+  </div>
+
+  <!-- Status -->
+  <p class="section-label">Estado atual</p>
+  <div class="status-grid">
+    <div class="status-card">
+      <div class="status-card-label">Alteração Matricial</div>
+      <div class="status-card-title">Rústico → Urbano</div>
+      <span class="badge badge-warn">Pendente</span>
+    </div>
+    <div class="status-card">
+      <div class="status-card-label">Reunião CMO</div>
+      <div class="status-card-title">Câmara de Óbidos</div>
+      <span class="badge badge-pending">27 de maio</span>
+    </div>
+    <div class="status-card">
+      <div class="status-card-label">Verificação REN</div>
+      <div class="status-card-title">Zona dos 528 m²</div>
+      <span class="badge badge-muted">A confirmar</span>
+    </div>
+    <div class="status-card">
+      <div class="status-card-label">Levantamento Topo.</div>
+      <div class="status-card-title">Área urbana real</div>
+      <span class="badge badge-muted">A fazer</span>
+    </div>
+  </div>
+
+  <!-- Key context -->
+  <div class="card">
+    <div class="card-header">
+      <svg class="text-terra" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span class="card-title">Contexto do Negócio</span>
+    </div>
+    <div class="card-body">
+      <p class="text-sm" style="color:var(--ink-2);line-height:1.6;">
+        Dois irmãos (27 e 32 anos) a comprar terreno rústico em Óbidos para construir <strong>duas casas bi-familiares</strong>. CPCV assinado. Arquiteto <strong>Rui Silva</strong> (Torres Vedras, BNI) encarregado da alteração matricial e do projeto.
+      </p>
+    </div>
+  </div>
+
+  <!-- Open points summary -->
+  <div class="card">
+    <div class="card-header">
+      <svg class="text-terra" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9,11 12,14 22,4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      <span class="card-title">Pontos em Aberto</span>
+    </div>
+    <div class="card-body">
+      <ul class="bullet">
+        <li>Confirmar que os 528 m² urbanos estão fora da REN (SNIT ou SIG CMO)</li>
+        <li>Resultado da reunião de 27 de maio — viabilidade do bi-familiar</li>
+        <li>Resultado da alteração matricial (verificação pelo engenheiro externo)</li>
+        <li>Levantamento topográfico para confirmar/refinar os 528 m²</li>
+        <li>Análise do Regulamento Urbanístico de 2019 pelo arquiteto</li>
+        <li>Definição do projeto: chave na mão vs. projeto + empreitada separada</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Arquiteto -->
+  <div class="card">
+    <div class="card-header">
+      <svg class="text-terra" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      <span class="card-title">Arquiteto Contratado</span>
+    </div>
+    <div class="card-body">
+      <div class="data-list">
+        <div class="data-row">
+          <span class="data-key">Nome</span>
+          <span class="data-val">Rui Silva</span>
+        </div>
+        <div class="data-row">
+          <span class="data-key">Localização</span>
+          <span class="data-val">Torres Vedras</span>
+        </div>
+        <div class="data-row">
+          <span class="data-key">Contacto via</span>
+          <span class="data-val">BNI</span>
+        </div>
+        <div class="data-row">
+          <span class="data-key">Tarefa atual</span>
+          <span class="data-val">Alteração matricial rústico → urbano nas Finanças</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section><!-- /tab-inicio -->
+
+
+<!-- ====================================================
+     TAB 2: TERRENO
+     ==================================================== -->
+<section id="tab-terreno" class="tab-section">
+
+  <p class="section-label">Identificação do Prédio</p>
+  <div class="card">
+    <div class="card-body">
+      <div class="data-list">
+        <div class="data-row"><span class="data-key">Denominação</span><span class="data-val">Casais Brancos</span></div>
+        <div class="data-row"><span class="data-key">Localização</span><span class="data-val">Óbidos (S. Pedro) / Santa Maria, S. Pedro e Sobral da Lagoa</span></div>
+        <div class="data-row"><span class="data-key">Conservatória</span><span class="data-val">Registo Predial de Óbidos</span></div>
+        <div class="data-row"><span class="data-key">Descrição predial</span><span class="data-val mono">574/19891116</span></div>
+        <div class="data-row"><span class="data-key">Secção</span><span class="data-val mono">S</span></div>
+        <div class="data-row"><span class="data-key">Artigo matricial</span><span class="data-val mono">57 (Rústica)</span></div>
+        <div class="data-row"><span class="data-key">Área (registo predial)</span><span class="data-val">9.440 m²</span></div>
+        <div class="data-row"><span class="data-key">Área (caderneta predial)</span><span class="data-val">9.861 m² <span class="text-xs text-muted">(+421 m² por erro)</span></span></div>
+        <div class="data-row"><span class="data-key">Área (cadastro DGT 2024)</span><span class="data-val text-terra">9.754 m² ✓</span></div>
+        <div class="data-row"><span class="data-key">ID cadastral</span><span class="data-val mono">AAA 001 659 086</span></div>
+        <div class="data-row"><span class="data-key">Ficha cadastral</span><span class="data-val mono">60332/2024</span></div>
+        <div class="data-row"><span class="data-key">Proprietário</span><span class="data-val">João da Silva Ramos</span></div>
+        <div class="data-row"><span class="data-key">NIF proprietário</span><span class="data-val mono">224414127</span></div>
+        <div class="data-row"><span class="data-key">Morada proprietário</span><span class="data-val">Rua Direita, nº 52, r/c, Óbidos</span></div>
+        <div class="data-row"><span class="data-key">Titularidade</span><span class="data-val">Propriedade plena — Parte 1/1</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-info">
+    <span class="alert-icon">📐</span>
+    <strong>Área mais fiável:</strong> O cadastro DGT (2024) é georreferenciado — usar <strong>9.754 m²</strong> para fins técnicos. A caderneta inclui 421 m² de zona urbana incluídos por erro (do Art. 32 da Sec. S, Proc. 44/86).
+  </div>
+
+  <p class="section-label">Composição do Terreno</p>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Parcelas (Caderneta Predial)</span></div>
+    <div class="card-body" style="padding:0">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Tipo</th><th>Designação</th><th>Classe</th><th>Nº Árvores</th><th>Área</th></tr></thead>
+          <tbody>
+            <tr><td>CA</td><td>Cultura Arvense</td><td>3ª</td><td>—</td><td>0,9440 ha</td></tr>
+            <tr><td>NPS</td><td>Nespereiras</td><td>Única</td><td>4</td><td>0,0000 ha</td></tr>
+            <tr><td>OLS</td><td>Oliveiras</td><td>SR</td><td>3</td><td>0,0000 ha</td></tr>
+            <tr><td>PCS</td><td>Pessegueiros</td><td>Única</td><td>2</td><td>0,0100 ha</td></tr>
+            <tr><td>URB</td><td>Urbano</td><td>—</td><td>—</td><td>0,0000 ha</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Confrontações</p>
+  <div class="card">
+    <div class="card-body">
+      <div class="data-list">
+        <div class="data-row"><span class="data-key">⬆ Norte</span><span class="data-val">Serventia</span></div>
+        <div class="data-row"><span class="data-key">⬇ Sul</span><span class="data-val">João Amaro de Sousa e João Nunes Júnior</span></div>
+        <div class="data-row"><span class="data-key">➡ Nascente</span><span class="data-val">José Faria</span></div>
+        <div class="data-row"><span class="data-key">⬅ Poente</span><span class="data-val">Lote nº 2 (loteamento 168/86) / Estrada</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="text-xs text-muted">Inscrição na matriz: 1986 · Valor Patrimonial Inicial: €36,61 · Valor Patrimonial Atual: €49,06 (1989)</p>
+    </div>
+  </div>
+
+  <p class="section-label">Histórico Legal — Alvará 168/86</p>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Loteamento Original</span></div>
+    <div class="card-body">
+      <div class="data-list">
+        <div class="data-row"><span class="data-key">Alvará</span><span class="data-val mono">168/86</span></div>
+        <div class="data-row"><span class="data-key">Data</span><span class="data-val">01/04/1986</span></div>
+        <div class="data-row"><span class="data-key">Emitido por</span><span class="data-val">Câmara Municipal de Óbidos</span></div>
+        <div class="data-row"><span class="data-key">Presidente CMO</span><span class="data-val">José António Pereira Júnior</span></div>
+        <div class="data-row"><span class="data-key">Requerente</span><span class="data-val">Altinino Costa Simão (Pinhal)</span></div>
+        <div class="data-row"><span class="data-key">NIF requerente</span><span class="data-val mono">112167993</span></div>
+        <div class="data-row"><span class="data-key">Aprovação em reunião</span><span class="data-val">17 de março de 1986</span></div>
+        <div class="data-row"><span class="data-key">Processo CMO</span><span class="data-val mono">168</span></div>
+        <div class="data-row"><span class="data-key">Nº de lotes</span><span class="data-val">3 lotes criados</span></div>
+        <div class="data-row"><span class="data-key">Obras de urbanização</span><span class="data-val">Dispensadas</span></div>
+        <div class="data-row"><span class="data-key">Parecer</span><span class="data-val">Zona Agrária Caldas da Rainha, ofício 356 de 30/01/1986</span></div>
+        <div class="data-row"><span class="data-key">Conservatória</span><span class="data-val">AP. 11 de 1989/11/16 — Autorização de Loteamento</span></div>
+        <div class="data-row"><span class="data-key">Prédios desanexados</span><span class="data-val mono">00575/161189 e 00576/161189</span></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Os Três Lotes</p>
+  <div class="lot-grid" style="margin-bottom:12px">
+    <div class="lot-card">
+      <div class="lot-num">1</div>
+      <div class="lot-area">217 m²</div>
+      <div class="lot-dest">Construção urbana</div>
+    </div>
+    <div class="lot-card">
+      <div class="lot-num">2</div>
+      <div class="lot-area">204 m²</div>
+      <div class="lot-dest">Construção urbana</div>
+    </div>
+    <div class="lot-card this-lot">
+      <div class="lot-num">3</div>
+      <div class="lot-area">9.440 m²</div>
+      <div class="lot-dest">← Este terreno</div>
+    </div>
+  </div>
+
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    O Lote 3 foi destinado a «reserva agrícola» no alvará de 1986. <strong>Não é uma servidão perpétua</strong> — o PDM de 1996 e o Reg. Urbanístico de 2019 prevalecem. A própria Câmara confirma que «a construção no local é possível».
+  </div>
+
+  <p class="section-label">Transmissão e Compra</p>
+  <div class="card">
+    <div class="card-body">
+      <div class="data-list">
+        <div class="data-row"><span class="data-key">Transmissão</span><span class="data-val">AP. 2980 de 2022/05/24 — Doação</span></div>
+        <div class="data-row"><span class="data-key">Registo</span><span class="data-val">2022/05/24 14:02 UTC</span></div>
+        <div class="data-row"><span class="data-key">CPCV</span><span class="data-val">Assinado pelos dois irmãos compradores</span></div>
+        <div class="data-row"><span class="data-key">Valor total</span><span class="data-val">€36.000</span></div>
+        <div class="data-row"><span class="data-key">Valor entregue</span><span class="data-val text-terra">€21.000 (58,3%)</span></div>
+        <div class="data-row"><span class="data-key">Valor em falta</span><span class="data-val">€15.000</span></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Alteração Matricial (Finanças)</p>
+  <div class="card">
+    <div class="card-header"><span class="card-title">O que está a acontecer</span></div>
+    <div class="card-body">
+      <p class="text-sm" style="color:var(--ink-2);line-height:1.6;margin-bottom:10px">
+        O Arq. Rui Silva submeteu nas Finanças um pedido de alteração da natureza matricial de <strong>Rústico para Urbano</strong>. A verificação por engenheiro externo é um procedimento normal da AT.
+      </p>
+      <div class="data-list">
+        <div class="data-row"><span class="data-key">O que é</span><span class="data-val">Atualização AT (Finanças) para fins fiscais</span></div>
+        <div class="data-row"><span class="data-key">O que NÃO é</span><span class="data-val">Alteração do PDM — são sistemas independentes</span></div>
+        <div class="data-row"><span class="data-key">Impacto IMI</span><span class="data-val">Altera valor tributável e taxa</span></div>
+        <div class="data-row"><span class="data-key">Impacto construção</span><span class="data-val text-muted">Nenhum — Câmara é independente</span></div>
+        <div class="data-row"><span class="data-key">Estado</span><span class="data-val"><span class="badge badge-warn">Pendente verificação</span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Pessoas e Entidades</p>
+  <div class="card">
+    <div class="card-body" style="padding-top:6px;padding-bottom:6px">
+      <div class="person-item">
+        <div class="person-name">João da Silva Ramos</div>
+        <div class="person-role">Vendedor / Proprietário atual · NIF 224414127</div>
+      </div>
+      <div class="person-item">
+        <div class="person-name">Dois irmãos compradores</div>
+        <div class="person-role">27 e 32 anos — compradores (CPCV assinado)</div>
+      </div>
+      <div class="person-item">
+        <div class="person-name">Rui Silva</div>
+        <div class="person-role">Arquiteto contratado (Torres Vedras, BNI)</div>
+      </div>
+      <div class="person-item">
+        <div class="person-name">Altinino Costa Simão</div>
+        <div class="person-role">Promotor original do loteamento de 1986 · NIF 112167993</div>
+      </div>
+      <div class="person-item">
+        <div class="person-name">Luís Higino, Arq.º</div>
+        <div class="person-role">Técnico CMO — emitiu informação técnica (06/05/2024)</div>
+      </div>
+      <div class="person-item">
+        <div class="person-name">Telmo de Sousa Félix</div>
+        <div class="person-role">Vereador CMO (despacho 7/PRE/2021)</div>
+      </div>
+      <div class="person-item">
+        <div class="person-name">José António Pereira Júnior</div>
+        <div class="person-role">Presidente CMO em 1986 (assinou o alvará 168/86)</div>
+      </div>
+      <div class="person-item">
+        <div class="person-name">Maria Joana Santos de Matos Garrido</div>
+        <div class="person-role">Conservadora — Conservatória de Óbidos</div>
+      </div>
+      <div class="person-item">
+        <div class="person-name">Ana Paula Lourenço Afonso de Moura Mendes</div>
+        <div class="person-role">Oficial de Registos (substituição) — Conservatória Óbidos</div>
+      </div>
+      <div class="person-item">
+        <div class="person-name">CCDR-LVT</div>
+        <div class="person-role">Emite parecer para construção em zona REN</div>
+      </div>
+      <div class="person-item">
+        <div class="person-name">AT — Finanças (Serviço 1414 · Óbidos)</div>
+        <div class="person-role">Trata da alteração matricial</div>
+      </div>
+      <div class="person-item">
+        <div class="person-name">DGT — Direção-Geral do Território</div>
+        <div class="person-role">Emitiu a ficha cadastral 60332/2024</div>
+      </div>
+    </div>
+  </div>
+
+</section><!-- /tab-terreno -->
+
+
+<!-- ====================================================
+     TAB 3: CONSTRUIR
+     ==================================================== -->
+<section id="tab-construir" class="tab-section">
+
+  <p class="section-label">Informação Técnica CMO (Processo 376/24)</p>
+  <div class="card">
+    <div class="card-body">
+      <div class="data-list">
+        <div class="data-row"><span class="data-key">Processo</span><span class="data-val mono">376/24 — INFOR</span></div>
+        <div class="data-row"><span class="data-key">Requerimento</span><span class="data-val mono">6165/24</span></div>
+        <div class="data-row"><span class="data-key">Data</span><span class="data-val">06/05/2024</span></div>
+        <div class="data-row"><span class="data-key">Local</span><span class="data-val">Rua Principal, Casais Brancos</span></div>
+        <div class="data-row"><span class="data-key">Técnico responsável</span><span class="data-val">Luís Higino, Arq.º</span></div>
+        <div class="data-row"><span class="data-key">Vereador</span><span class="data-val">Telmo de Sousa Félix</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-ok">
+    <span class="alert-icon">✅</span>
+    A CMO confirma (maio 2024): <strong>«a construção no local é possível desde que cumpra os artigos do regulamento do PDM acima descritos.»</strong>
+  </div>
+
+  <p class="section-label">Zonamento PDM</p>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Duas Zonas Distintas</span></div>
+    <div class="card-body" style="padding:0">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Zona</th><th>Área aprox.</th><th>Localização</th><th>Regime</th></tr></thead>
+          <tbody>
+            <tr class="highlight">
+              <td><strong>Espaço Urbano Nível 3</strong></td>
+              <td><strong>≈ 528 m²</strong></td>
+              <td>A <strong>poente</strong> do terreno</td>
+              <td><span class="badge badge-ok">Construção possível</span></td>
+            </tr>
+            <tr>
+              <td>Outras Áreas Agrícolas</td>
+              <td>≈ 4.345 m²</td>
+              <td>Resto do terreno</td>
+              <td><span class="badge badge-danger">Muito restrito</span></td>
+            </tr>
+            <tr>
+              <td>REN (zona pavilhão)</td>
+              <td>Não quantif.</td>
+              <td>Zona do polígono de pavilhão</td>
+              <td><span class="badge badge-warn">Parecer CCDR-LVT</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    Os 528 m² foram calculados por sobreposição de plantas à escala 1:2000. É uma <strong>estimativa técnica</strong>, não um valor georreferenciado. Com levantamento topográfico rigoroso, este limite pode ser contestado ou refinado.
+  </div>
+
+  <p class="section-label">Índices Urbanísticos — Art. 30º (Espaço Urbano Nível 3)</p>
+  <div class="card">
+    <div class="card-body">
+      <div class="data-list">
+        <div class="data-row"><span class="data-key">Densidade bruta máx. (Db)</span><span class="data-val">60 hab/ha</span></div>
+        <div class="data-row"><span class="data-key">Índice construção bruto (ICb)</span><span class="data-val text-terra bold">0,25</span></div>
+        <div class="data-row"><span class="data-key">Número de pisos</span><span class="data-val bold">máx. 2 pisos</span></div>
+        <div class="data-row"><span class="data-key">Cércea máxima</span><span class="data-val bold">7 m</span></div>
+      </div>
+    </div>
+    <div class="card-body" style="background:var(--terra-soft)">
+      <p class="text-sm" style="color:var(--terra);font-weight:600;margin-bottom:2px">Cálculo crítico:</p>
+      <p class="text-sm" style="color:var(--ink-2)">528 m² × 0,25 = <strong>132 m² de área máxima bruta</strong></p>
+      <p class="text-xs text-muted" style="margin-top:4px">Índices aplicam-se APENAS sobre os ≈528 m² de Espaço Urbano Nível 3</p>
+    </div>
+  </div>
+
+  <p class="section-label">Estacionamento — Art. 32º</p>
+  <div class="card">
+    <div class="card-body" style="padding:0">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Uso</th><th>Critério</th></tr></thead>
+          <tbody>
+            <tr class="highlight"><td>Residencial (≤ 200 m²)</td><td><strong>1,5 lugares/fogo</strong></td></tr>
+            <tr><td>Residencial (&gt; 200 m²)</td><td>2 lugares/fogo</td></tr>
+            <tr><td>Serviços e comércio</td><td>1 lugar/40 m²</td></tr>
+            <tr><td>Hoteleiro</td><td>1 lugar/2 quartos</td></tr>
+            <tr><td>Lugar ligeiros (superfície)</td><td>20 m²/lugar</td></tr>
+            <tr><td>Lugar ligeiros (estrutura)</td><td>25 m²/lugar</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Condicionantes — Art. 33º (Interdições em Espaço Urbano)</p>
+  <div class="card">
+    <div class="card-body">
+      <ul class="bullet">
+        <li>Instalação de indústrias de classe A ou B</li>
+        <li>Indústria com área total de construção &gt; 2.000 m²</li>
+        <li>Parque de sucata, lixeiras, depósitos de explosivos, instalações agropecuárias</li>
+        <li>Construção nova / renovação / ampliação deve integrar o volume delimitado pelo alinhamento existente (sempre que possível)</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="section-label">Outras Áreas Agrícolas — Art. 53º (Exceções possíveis)</p>
+  <div class="card">
+    <div class="card-body" style="padding:0">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Exceção</th><th>Condições</th></tr></thead>
+          <tbody>
+            <tr><td>Habitação do agricultor proprietário</td><td>Parcela mín. <strong>4 ha</strong>; ICb 0,04; Cércea 4,5 m; ATC máx. 300 m²; Afastamento mín. 10 m</td></tr>
+            <tr><td>Atividades complementares agrícolas</td><td>Parcela mín. <strong>0,5 ha</strong>; ICb 0,04; Cércea 4,5 m; ATC máx. 600 m²; Afastamento mín. 10 m</td></tr>
+            <tr><td>Turismo rural / agroturismo</td><td>Ver art. 53º nº 3.3</td></tr>
+            <tr><td>Unidades agroindustriais</td><td>ICb 0,05; Afastamento mín. 20 m</td></tr>
+            <tr><td>Equipamentos coletivos</td><td>50% do terreno agriculturado; projeto de arranjos exteriores obrigatório</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-danger">
+    <span class="alert-icon">🚫</span>
+    Terreno com ≈9.754 m² (menos de 1 ha). A parcela mínima para habitação do agricultor é <strong>4 ha</strong> — o terreno não chega. <strong>Não é possível construir habitação na zona agrícola</strong> por esta via.
+  </div>
+
+  <p class="section-label">Cedências — Art. 34º</p>
+  <div class="card">
+    <div class="card-body">
+      <p class="text-sm" style="color:var(--ink-2)">Em operações de loteamento nos espaços urbanizáveis aplica-se o disposto na <strong>Portaria nº 1182/92</strong>, de 22 de dezembro.</p>
+    </div>
+  </div>
+
+  <p class="section-label">Instrumentos Urbanísticos em Vigor</p>
+  <div class="card">
+    <div class="card-body" style="padding-top:6px;padding-bottom:6px">
+      <div class="instrument-item"><strong>Alvará 168/86</strong> — não define índices (aplica-se o PDM)</div>
+      <div class="instrument-item"><strong>PDM de Óbidos</strong> — Resolução CM nº 187/1996 de 28/11 e alterações</div>
+      <div class="instrument-item"><strong>Regulamento Urbanístico de Óbidos</strong> — Reg. nº 191/2019, DR nº 42, 2ª Série, 28/02/2019</div>
+      <div class="instrument-item"><strong>RGEU</strong> — DL nº 38.382 de 07/08/1951 e alterações</div>
+      <div class="instrument-item"><strong>Acessibilidades</strong> — DL nº 163/2006, de 08/08</div>
+      <div class="instrument-item"><strong>Segurança contra incêndio</strong> — DL nº 220/2008, de 12/11</div>
+      <div class="instrument-item"><strong>RJUE</strong> — Regime Jurídico da Urbanização e Edificação</div>
+    </div>
+  </div>
+
+  <p class="section-label">Calculadora de Construção</p>
+  <div class="card">
+    <div class="card-body">
+      <div class="calc-section">
+        <div class="calc-label">
+          <span>Área urbana disponível</span>
+          <span class="calc-val-display" id="calc-area-val">528 m²</span>
+        </div>
+        <input type="range" id="calc-area" min="400" max="1000" step="10" value="528" oninput="updateCalc()">
+      </div>
+      <div class="calc-section">
+        <div class="calc-label">
+          <span>Índice de construção (ICb)</span>
+          <span class="calc-val-display" id="calc-index-val">0,25</span>
+        </div>
+        <input type="range" id="calc-index" min="0.20" max="0.60" step="0.01" value="0.25" oninput="updateCalc()">
+      </div>
+      <div class="calc-section">
+        <div class="calc-label">
+          <span>Número de fogos</span>
+          <span class="calc-val-display" id="calc-fogos-val">2</span>
+        </div>
+        <input type="range" id="calc-fogos" min="1" max="4" step="1" value="2" oninput="updateCalc()">
+      </div>
+    </div>
+    <div class="card-body" style="background:var(--surface-2)">
+      <div class="calc-result-row">
+        <span class="calc-result-key">Área bruta máxima total</span>
+        <span class="calc-result-val" id="res-total">132 m²</span>
+      </div>
+      <div class="calc-result-row">
+        <span class="calc-result-key">Área bruta por fogo</span>
+        <span class="calc-result-val" id="res-fogo">66 m²</span>
+      </div>
+      <div class="calc-result-row">
+        <span class="calc-result-key">Área útil estimada/fogo</span>
+        <span class="calc-result-val small" id="res-util">50–55 m²</span>
+      </div>
+      <div class="calc-result-row">
+        <span class="calc-result-key">Lugares de estacionamento</span>
+        <span class="calc-result-val small" id="res-park">3 lugares</span>
+      </div>
+      <div class="calc-feasibility" id="calc-feasibility"></div>
+    </div>
+  </div>
+
+  <p class="section-label">Análise: Bi-Familiar</p>
+  <div class="card">
+    <div class="card-header"><span class="card-title">O que pode mudar este cálculo</span></div>
+    <div class="card-body">
+      <ul class="bullet">
+        <li><strong>Refinamento dos 528 m²</strong> — levantamento topográfico rigoroso pode revelar área urbana maior</li>
+        <li><strong>Reclassificação</strong> — reclassificar mais área como Espaço Urbano requer alteração ao PDM (processo longo)</li>
+        <li><strong>Interpretação do bi-familiar</strong> — Câmara pode ter critérios específicos não explícitos no regulamento</li>
+        <li><strong>Reg. Urbanístico de 2019</strong> — pode ter disposições mais favoráveis que o PDM de 1996</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="section-label">Interpretação do Alvará 1986</p>
+  <div class="card">
+    <div class="card-header"><span class="card-title">O que o alvará FAZ (ainda válido)</span></div>
+    <div class="card-body">
+      <ul class="bullet">
+        <li>Criou juridicamente os três lotes — registado na Conservatória, válido</li>
+        <li>Estabeleceu as confrontações de cada lote</li>
+        <li>Autorizou o loteamento urbano do prédio original</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">O que o alvará NÃO FAZ (não vinculativo)</span></div>
+    <div class="card-body">
+      <ul class="bullet">
+        <li>Não autoriza construção — precisas de licença de obras separada</li>
+        <li>Não define índices urbanísticos (a própria Câmara confirma)</li>
+        <li>O destino «reserva agrícola» do Lote 3 <strong>não é uma servidão perpétua</strong> — substituído pelo PDM</li>
+      </ul>
+      <div class="alert alert-info mt-12" style="margin-bottom:0">
+        <span class="alert-icon">⚖️</span>
+        <strong>Princípio legal:</strong> A camada mais recente prevalece. PDM 1996 e Reg. Urbanístico 2019 prevalecem sobre o alvará de 1986 na definição de usos e índices.
+      </div>
+    </div>
+  </div>
+
+</section><!-- /tab-construir -->
+
+
+<!-- ====================================================
+     TAB 4: PROCESSO
+     ==================================================== -->
+<section id="tab-processo" class="tab-section">
+
+  <p class="section-label">Cronologia Completa</p>
+  <div class="card">
+    <div class="card-body">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">1985 Nov 30</div>
+          <div class="tl-text">Planta do projecto de loteamento (Altinino Costa Simão)</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">1986 Jan 30</div>
+          <div class="tl-text">Parecer favorável da Zona Agrária de Caldas da Rainha (ofício nº 356)</div>
+        </div>
+        <div class="tl-item milestone">
+          <div class="tl-date">1986 Mar 17</div>
+          <div class="tl-text">Aprovação do loteamento em reunião da Câmara Municipal de Óbidos</div>
+        </div>
+        <div class="tl-item milestone">
+          <div class="tl-date">1986 Abr 01</div>
+          <div class="tl-text">Emissão do <strong>Alvará de Loteamento nº 168/86</strong> — criação dos 3 lotes</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">1986</div>
+          <div class="tl-text">Inscrição do artigo matricial 57 (data da caderneta)</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">1989 Nov 16</div>
+          <div class="tl-text">Autorização de Loteamento inscrita na Conservatória (AP. 11). Desanexação dos prédios 00575 e 00576.</div>
+        </div>
+        <div class="tl-item milestone">
+          <div class="tl-date">1996 Nov 28</div>
+          <div class="tl-text">Publicação do <strong>PDM de Óbidos</strong> (Resolução CM nº 187/1996) — passa a ser o instrumento urbanístico principal</div>
+        </div>
+        <div class="tl-item milestone">
+          <div class="tl-date">2019 Fev 28</div>
+          <div class="tl-text">Publicação do <strong>Regulamento Urbanístico de Óbidos</strong> (nº 191/2019, DR nº 42, 2ª Série)</div>
+        </div>
+        <div class="tl-item milestone">
+          <div class="tl-date">2022 Mai 24</div>
+          <div class="tl-text"><strong>Doação</strong> do terreno para João da Silva Ramos (AP. 2980 de 2022/05/24 14:02 UTC)</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2024 Abr 23</div>
+          <div class="tl-text">Planta de gestão urbanística elaborada pela CMO (9.272,6 m² com loteamento 168/86 sobreposto)</div>
+        </div>
+        <div class="tl-item milestone">
+          <div class="tl-date">2024 Mai 06</div>
+          <div class="tl-text"><strong>Informação Técnica CMO</strong> emitida (Arq. Luís Higino) — processo 376/24. Zonamento, índices e conclusão favorável.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2024 Mai 15</div>
+          <div class="tl-text">Carta do Vereador Telmo Félix a transmitir a informação técnica ao requerente</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2024 Jul 01</div>
+          <div class="tl-text">Ficha de Prédio DGT emitida (cadastro 60332/2024) — área: 9.754 m²</div>
+        </div>
+        <div class="tl-item milestone">
+          <div class="tl-date">2024 / 2025</div>
+          <div class="tl-text"><strong>CPCV assinado</strong> pelos dois irmãos compradores — €21.000 de €36.000 entregues</div>
+        </div>
+        <div class="tl-item future">
+          <div class="tl-date">2025 (pendente)</div>
+          <div class="tl-text">Pedido de <strong>alteração matricial</strong> submetido nas Finanças — verificação por engenheiro externo</div>
+        </div>
+        <div class="tl-item future">
+          <div class="tl-date">27 de Maio</div>
+          <div class="tl-text"><strong>Reunião marcada</strong> na Câmara Municipal de Óbidos — viabilidade do bi-familiar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Documentos Existentes</p>
+  <div class="card">
+    <div class="card-body" style="padding:0">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Documento</th><th>Data</th><th>O que prova</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Certidão Permanente do Registo Predial</strong></td>
+              <td>2022/06/14</td>
+              <td>Propriedade, histórico de inscrições, descrição do prédio</td>
+            </tr>
+            <tr>
+              <td><strong>Caderneta Predial Rústica (Modelo B)</strong></td>
+              <td>—</td>
+              <td>Composição, parcelas, valor patrimonial, titulares AT</td>
+            </tr>
+            <tr>
+              <td><strong>Alvará de Loteamento nº 168/86</strong></td>
+              <td>01/04/1986</td>
+              <td>Criação dos 3 lotes, confrontações, condições do loteamento</td>
+            </tr>
+            <tr>
+              <td><strong>Planta do Projecto de Loteamento</strong></td>
+              <td>30/11/1985</td>
+              <td>Localização dos lotes (Lote 3 identificado na planta)</td>
+            </tr>
+            <tr>
+              <td><strong>Ficha de Prédio DGT (60332/2024)</strong></td>
+              <td>01/07/2024</td>
+              <td>Área georreferenciada (9.754 m²), localização cadastral</td>
+            </tr>
+            <tr>
+              <td><strong>Carta CMO (Vereador Telmo Félix)</strong></td>
+              <td>15/05/2024</td>
+              <td>Transmissão da informação técnica ao requerente</td>
+            </tr>
+            <tr>
+              <td><strong>Informação Técnica CMO (Arq. Luís Higino)</strong></td>
+              <td>06/05/2024</td>
+              <td>Zonamento PDM, índices aplicáveis, condicionamentos, conclusão favorável</td>
+            </tr>
+            <tr>
+              <td><strong>Planta de Gestão Urbanística CMO</strong></td>
+              <td>23/04/2024</td>
+              <td>Delimitação do prédio (9.272,6 m²) com loteamento 168/86 sobreposto</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Riscos Confirmados</p>
+  <div class="card">
+    <div class="card-body" style="padding-top:6px;padding-bottom:6px">
+      <div class="risk-item">
+        <span class="risk-sev risk-sev-alta">Alta</span>
+        <div class="risk-text">
+          <div class="risk-title">Área de construção muito limitada (132 m²)</div>
+          <div class="risk-state">Confirmado — depende do resultado da reunião de 27/5</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <span class="risk-sev risk-sev-alta">Alta</span>
+        <div class="risk-text">
+          <div class="risk-title">Parte do terreno em REN</div>
+          <div class="risk-state">Confirmado — zona do pavilhão; a poente parece livre (confirmar)</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <span class="risk-sev risk-sev-media">Média</span>
+        <div class="risk-text">
+          <div class="risk-title">Lote 3 era «reserva agrícola» no alvará de 86</div>
+          <div class="risk-state">Mitigado pelo PDM atual; Câmara confirma construção possível</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <span class="risk-sev risk-sev-baixa">Baixa–Média</span>
+        <div class="risk-text">
+          <div class="risk-title">Discrepância de áreas (3 valores diferentes)</div>
+          <div class="risk-state">Pendente de levantamento topográfico rigoroso</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Verificação REN</p>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Como confirmar se os 528 m² estão fora da REN</span></div>
+    <div class="card-body">
+      <a class="link-btn" href="https://snit.dgterritorio.gov.pt" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+        <div class="link-btn-text">
+          <div class="link-btn-title">SNIT — Sistema Nac. de Info. Territorial</div>
+          <div class="link-btn-sub">snit.dgterritorio.gov.pt · Gratuito, sem conta</div>
+        </div>
+        <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <a class="link-btn" href="https://sig.cm-obidos.pt" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div class="link-btn-text">
+          <div class="link-btn-title">SIG da Câmara de Óbidos</div>
+          <div class="link-btn-sub">sig.cm-obidos.pt · Camadas do PDM local</div>
+        </div>
+        <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <p class="text-xs text-muted mt-8">No SNIT: ligar camadas REN + RAN + PDM Óbidos + Ortofotomapa. Navegar até Casais Brancos e sobrepor ao polígono do terreno.</p>
+    </div>
+  </div>
+
+</section><!-- /tab-processo -->
+
+
+<!-- ====================================================
+     TAB 5: REUNIÃO
+     ==================================================== -->
+<section id="tab-reuniao" class="tab-section">
+
+  <div class="card" style="background: linear-gradient(135deg, #2A1E10, #3D2D18); color: white; margin-bottom:12px">
+    <div class="card-body">
+      <p style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px">Reunião Marcada</p>
+      <p style="font-family:var(--serif);font-size:24px;font-weight:700;line-height:1.1;color:white;margin-bottom:2px">27 de Maio</p>
+      <p style="font-size:13px;color:rgba(255,255,255,.55)">Câmara Municipal de Óbidos · Viabilidade do bi-familiar</p>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+    <p class="section-label" style="margin:0">Perguntas a fazer na CMO</p>
+    <button onclick="clearChecklist()" style="font-size:12px;color:var(--ink-4);padding:4px 8px;border:1px solid var(--border);border-radius:6px">Limpar</button>
+  </div>
+  <div class="card">
+    <div class="card-body" style="padding-top:6px;padding-bottom:6px">
+      <div class="checklist" id="checklist">
+        <div class="check-item" data-id="q1" onclick="toggleCheck(this)">
+          <span class="check-num">1</span>
+          <div class="check-box">
+            <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><polyline points="2,6 5,9 10,3"/></svg>
+          </div>
+          <span class="check-text">Podem mostrar na planta do PDM exatamente onde passa o limite da zona urbana? <em>(pedir georreferenciado, não à escala 1:2000)</em></span>
+        </div>
+        <div class="check-item" data-id="q2" onclick="toggleCheck(this)">
+          <span class="check-num">2</span>
+          <div class="check-box">
+            <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><polyline points="2,6 5,9 10,3"/></svg>
+          </div>
+          <span class="check-text">Os 528 m² são um número fixo ou há margem para refinamento com levantamento topográfico?</span>
+        </div>
+        <div class="check-item" data-id="q3" onclick="toggleCheck(this)">
+          <span class="check-num">3</span>
+          <div class="check-box">
+            <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><polyline points="2,6 5,9 10,3"/></svg>
+          </div>
+          <span class="check-text">É possível construir um bi-familiar dentro dos 132 m² de área bruta?</span>
+        </div>
+        <div class="check-item" data-id="q4" onclick="toggleCheck(this)">
+          <span class="check-num">4</span>
+          <div class="check-box">
+            <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><polyline points="2,6 5,9 10,3"/></svg>
+          </div>
+          <span class="check-text">Existe algum mecanismo (direito de superfície, alvará condicionado, etc.) que permita aumentar a área classificada como urbana?</span>
+        </div>
+        <div class="check-item" data-id="q5" onclick="toggleCheck(this)">
+          <span class="check-num">5</span>
+          <div class="check-box">
+            <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><polyline points="2,6 5,9 10,3"/></svg>
+          </div>
+          <span class="check-text">A zona dos 528 m² está definitivamente fora da REN? <em>(pedir confirmação escrita)</em></span>
+        </div>
+        <div class="check-item" data-id="q6" onclick="toggleCheck(this)">
+          <span class="check-num">6</span>
+          <div class="check-box">
+            <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><polyline points="2,6 5,9 10,3"/></svg>
+          </div>
+          <span class="check-text">O polígono de pavilhão do loteamento de 1986 — onde cai exatamente e qual o seu estatuto atual?</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Referência rápida para a reunião</p>
+  <div class="card">
+    <div class="card-body">
+      <div class="data-list">
+        <div class="data-row"><span class="data-key">Área urbana estimada</span><span class="data-val text-terra">≈ 528 m²</span></div>
+        <div class="data-row"><span class="data-key">ICb (Art. 30º PDM)</span><span class="data-val bold">0,25</span></div>
+        <div class="data-row"><span class="data-key">Área max. bruta total</span><span class="data-val text-terra bold">132 m²</span></div>
+        <div class="data-row"><span class="data-key">Área bruta/fogo (2 fogos)</span><span class="data-val">≈ 66 m²</span></div>
+        <div class="data-row"><span class="data-key">Pisos máximos</span><span class="data-val">2 pisos</span></div>
+        <div class="data-row"><span class="data-key">Cércea máxima</span><span class="data-val">7 m</span></div>
+        <div class="data-row"><span class="data-key">Estacionamento (≤200m²)</span><span class="data-val">1,5 lugares/fogo</span></div>
+        <div class="data-row"><span class="data-key">Processo CMO ref.</span><span class="data-val mono">376/24</span></div>
+        <div class="data-row"><span class="data-key">Técnico CMO</span><span class="data-val">Luís Higino, Arq.º</span></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Pontos em Aberto (pós-reunião)</p>
+  <div class="card">
+    <div class="card-body" style="padding-top:6px;padding-bottom:6px">
+      <div class="open-item">
+        <span class="open-num">1</span>
+        <span class="open-text">Confirmação de que os 528 m² estão fora da REN (verificar no SNIT ou SIG CMO)</span>
+      </div>
+      <div class="open-item">
+        <span class="open-num">2</span>
+        <span class="open-text">Resultado da reunião de 27/5 — viabilidade e condições do bi-familiar</span>
+      </div>
+      <div class="open-item">
+        <span class="open-num">3</span>
+        <span class="open-text">Resultado da alteração matricial nas Finanças (verificação pelo engenheiro externo)</span>
+      </div>
+      <div class="open-item">
+        <span class="open-num">4</span>
+        <span class="open-text">Levantamento topográfico rigoroso para confirmar/refinar os 528 m²</span>
+      </div>
+      <div class="open-item">
+        <span class="open-num">5</span>
+        <span class="open-text">Análise do Regulamento Urbanístico de 2019 pelo arquiteto (disposições mais favoráveis?)</span>
+      </div>
+      <div class="open-item">
+        <span class="open-num">6</span>
+        <span class="open-text">Definição do projeto: chave na mão (empresa construtora) vs. projeto + empreitada separada</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Glossário</p>
+  <div class="card">
+    <div class="card-body" style="padding-top:4px;padding-bottom:4px">
+      <div id="glossary">
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-term">PDM — Plano Diretor Municipal</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <p class="accordion-def">Instrumento urbanístico municipal que classifica os solos e define os usos e índices de construção. O PDM de Óbidos (1996, atualizado) é o documento que define o que é possível construir neste terreno. Prevalece sobre o alvará de 1986.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-term">REN — Reserva Ecológica Nacional</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <p class="accordion-def">Restrição de utilidade pública que limita severamente a construção em áreas com valor ecológico (leitos de cheia, zonas declivosas, etc.). Parte deste terreno está em REN (zona do polígono de pavilhão do loteamento 1986). Qualquer construção nessa zona requer parecer prévio da CCDR-LVT.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-term">RAN — Reserva Agrícola Nacional</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <p class="accordion-def">Restrição de utilidade pública que protege os solos com maior aptidão agrícola. Diferente da REN. É necessário verificar no SNIT se este terreno tem áreas em RAN além das em REN.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-term">ICb — Índice de Construção Bruto</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <p class="accordion-def">Rácio entre a área bruta de construção permitida e a área do terreno. ICb = 0,25 significa que por cada 100 m² de terreno, podes construir 25 m² de área bruta. Aplicado aos ≈528 m² urbanos: 528 × 0,25 = 132 m².</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-term">Cércea</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <p class="accordion-def">Altura máxima do edifício, medida desde o nível do solo adjacente até à linha de cornija ou beirado. Nesta zona é limitada a 7 m, com máximo de 2 pisos. Não inclui chaminés ou elementos técnicos.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-term">Alvará de Loteamento</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <p class="accordion-def">Licença municipal que permite dividir um prédio em vários lotes. O alvará 168/86 criou os 3 lotes que existem hoje. Não autoriza construção (isso requer licença de obras separada) e não define índices urbanísticos — essa competência passou para o PDM.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-term">CPCV — Contrato Promessa Compra e Venda</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <p class="accordion-def">Contrato preliminar que vincula comprador e vendedor à celebração futura da escritura. O CPCV foi assinado pelos dois irmãos. O valor total é €36.000, dos quais €21.000 já foram entregues como sinal e princípio de pagamento.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-term">Alteração Matricial</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <p class="accordion-def">Procedimento nas Finanças (AT) para alterar a classificação fiscal do prédio de Rústico para Urbano. Afeta o IMI e mais-valias. É completamente independente do PDM/Câmara — a classificação da Câmara e das Finanças são sistemas separados.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-term">CCDR-LVT</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <p class="accordion-def">Comissão de Coordenação e Desenvolvimento Regional de Lisboa e Vale do Tejo. É a entidade que emite parecer prévio para qualquer construção em zonas classificadas como REN. Sem este parecer não é possível construir na zona do polígono de pavilhão.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-term">RJUE — Regime Jurídico da Urbanização e Edificação</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <p class="accordion-def">Lei-quadro que define os procedimentos de licenciamento urbanístico em Portugal. Define quando é necessária licença de obras, comunicação prévia, etc. Aplica-se a todas as operações urbanísticas neste terreno.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-term">Cadastro DGT</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <p class="accordion-def">Base de dados da Direção-Geral do Território com a delimitação georreferenciada dos prédios. O cadastro de 2024 dá 9.754 m² para este terreno — é o valor mais fiável por ser georreferenciado. Difere da caderneta predial (9.861 m²) e do registo predial (9.440 m²).</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-term">Bi-familiar</span>
+            <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <p class="accordion-def">Habitação com dois fogos (apartamentos/casas) que partilham estrutura e lote. Neste caso: dois irmãos com uma casa cada, partilhando o mesmo edifício. Com 132 m² de área bruta total, cada fogo teria ~66 m² brutos (~50–55 m² úteis), o que é tecnicamente viável mas condicionado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section><!-- /tab-reuniao -->
+
+</main><!-- /main -->
+
+<!-- ============================================================
+     BOTTOM NAVIGATION
+     ============================================================ -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" data-tab="inicio" onclick="switchTab('inicio', this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+      <polyline points="9,22 9,12 15,12 15,22"/>
+    </svg>
+    <span>Início</span>
+  </button>
+  <button class="nav-btn" data-tab="terreno" onclick="switchTab('terreno', this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </svg>
+    <span>Terreno</span>
+  </button>
+  <button class="nav-btn" data-tab="construir" onclick="switchTab('construir', this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="4" y1="21" x2="4" y2="14"/>
+      <line x1="4" y1="10" x2="4" y2="3"/>
+      <line x1="12" y1="21" x2="12" y2="12"/>
+      <line x1="12" y1="8" x2="12" y2="3"/>
+      <line x1="20" y1="21" x2="20" y2="16"/>
+      <line x1="20" y1="12" x2="20" y2="3"/>
+      <line x1="1" y1="14" x2="7" y2="14"/>
+      <line x1="9" y1="8" x2="15" y2="8"/>
+      <line x1="17" y1="16" x2="23" y2="16"/>
+    </svg>
+    <span>Construir</span>
+  </button>
+  <button class="nav-btn" data-tab="processo" onclick="switchTab('processo', this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="8" y1="6" x2="21" y2="6"/>
+      <line x1="8" y1="12" x2="21" y2="12"/>
+      <line x1="8" y1="18" x2="21" y2="18"/>
+      <line x1="3" y1="6" x2="3.01" y2="6"/>
+      <line x1="3" y1="12" x2="3.01" y2="12"/>
+      <line x1="3" y1="18" x2="3.01" y2="18"/>
+    </svg>
+    <span>Processo</span>
+  </button>
+  <button class="nav-btn" data-tab="reuniao" onclick="switchTab('reuniao', this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+    </svg>
+    <span>Reunião</span>
+  </button>
+</nav>
+
+</div><!-- /app -->
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+// ---- Tab navigation ----
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('tab-' + id).scrollTop = 0;
+}
+
+// ---- Calculator ----
+function updateCalc() {
+  const area  = parseFloat(document.getElementById('calc-area').value);
+  const idx   = parseFloat(document.getElementById('calc-index').value);
+  const fogos = parseInt(document.getElementById('calc-fogos').value);
+
+  const total  = area * idx;
+  const perFog = total / fogos;
+  const util   = perFog * 0.82; // ~82% of gross is usable
+  const park   = Math.ceil(fogos * (perFog <= 200 ? 1.5 : 2));
+
+  document.getElementById('calc-area-val').textContent  = Math.round(area) + ' m²';
+  document.getElementById('calc-index-val').textContent = idx.toFixed(2).replace('.', ',');
+  document.getElementById('calc-fogos-val').textContent = fogos;
+  document.getElementById('res-total').textContent = Math.round(total) + ' m²';
+  document.getElementById('res-fogo').textContent  = Math.round(perFog) + ' m²';
+  document.getElementById('res-util').textContent  = Math.round(util * 0.95) + '–' + Math.round(util) + ' m²';
+  document.getElementById('res-park').textContent  = park + ' lugar' + (park !== 1 ? 'es' : '');
+
+  const feas = document.getElementById('calc-feasibility');
+  if (perFog < 50) {
+    feas.style.background = 'var(--c-danger-bg)';
+    feas.style.color = 'var(--c-danger)';
+    feas.textContent = '⚠️ Muito condicionado — menos de 50 m² brutos/fogo';
+  } else if (perFog < 80) {
+    feas.style.background = 'var(--c-warn-bg)';
+    feas.style.color = 'var(--c-warn)';
+    feas.textContent = '⚡ Viável mas apertado — habitar requer boa arquitetura';
+  } else {
+    feas.style.background = 'var(--c-ok-bg)';
+    feas.style.color = 'var(--c-ok)';
+    feas.textContent = '✅ Viável — área razoável por fogo';
+  }
+}
+updateCalc(); // run on load
+
+// ---- Checklist (localStorage) ----
+const STORAGE_KEY = 'casais-brancos-checklist';
+
+function loadChecklist() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    document.querySelectorAll('.check-item').forEach(item => {
+      if (saved[item.dataset.id]) item.classList.add('done');
+    });
+  } catch(e) {}
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  saveChecklist();
+}
+
+function saveChecklist() {
+  const state = {};
+  document.querySelectorAll('.check-item').forEach(item => {
+    state[item.dataset.id] = item.classList.contains('done');
+  });
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function clearChecklist() {
+  document.querySelectorAll('.check-item').forEach(item => item.classList.remove('done'));
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+}
+
+loadChecklist();
+
+// ---- Accordion / Glossary ----
+function toggleAccordion(btn) {
+  const item = btn.closest('.accordion-item');
+  item.classList.toggle('open');
+}
+
+// ---- Service Worker ----
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+</script>
+
+</body>
+</html>
